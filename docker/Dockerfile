@@ -1,9 +1,17 @@
-FROM ubuntu:latest
+FROM --platform=linux/x86-64 ubuntu/squid:4.13-21.10_edge
 
-RUN apt-get update && \
-    apt-get -y install squid3
+#ENV DEBIAN_FRONTEND noninteractive
+#ENV TZ Etc/UTC
+#RUN apt-get update
+#RUN apt-get update -qq \
+#    && apt-get install -qqy squid3
+
+#RUN service squid start
+#RUN service --status-all
+#&& tail -f /dev/null
 
 COPY squid.conf /etc/squid/squid.conf
 COPY squid.htpasswd /etc/squid/squid.htpasswd
+#COPY platops-entrypoint.sh /
 
-CMD service squid start && service --status-all && /bin/bash
+#ENTRYPOINT ["/platops-entrypoint.sh"]
